@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="IPLLL.png">
+  <title>IPL Predictor</title>
+  <style>
+    /* Root Variables for Theming */
+    :root {
+      --primary-color: #00214E;
+      --secondary-color: #0055A5;
+      --button-gradient: linear-gradient(90deg, #0f0808, #fc0931);
+      --light-bg: #f4f4f4;
+      --dark-bg: #1a1a1a;
+      --white: #fff;
+      --text-color: #ddd;
+      --hover-effect: rgba(255, 117, 140, 0.3);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-color);
+      background: url('background.jpg') no-repeat center center fixed; /* Replace with your background image path */
+      background-size: cover;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.3s ease;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      color: var(--white);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    header .logo img {
+      height: 50px;
+      width: auto;
+    }
+
+    header nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    header nav ul li a {
+      color: var(--white);
+      font-weight: bold;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    header nav ul li a:hover {
+      color: var(--button-gradient);
+    }
+
+    header nav ul li a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0%;
+      height: 2px;
+      background: var(--white);
+      transition: width 0.3s ease;
+    }
+
+    header nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    #hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+              url('ipl.jpg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  text-align: center;
+  backdrop-filter: blur(5px); /* Optional: Apply blur if supported */
+  filter: brightness(1.5); /* Increase brightness by 20% */
+}
+
+
+
+
+    #hero .ipl-logo {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      opacity: 0.8; /* Makes the logo slightly transparent */
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero-content {
+      z-index: 2;
+      color: var(--white);
+      text-align: center;
+    }
+
+    .hero-content h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .button-container button {
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: var(--button-gradient);
+      color: var(--white);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .button-container button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px var(--hover-effect);
+      background: linear-gradient(90deg, #2a292a, #e36206);
+    }
+
+    footer {
+      padding: 1.5rem;
+      background: var(--primary-color);
+      color: var(--white);
+      text-align: center;
+    }
+
+    footer p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="IPLLL.png" alt="IPL Logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="pointstable.html">Points Table</a></li>
+        <li><a href="teams.html">Teams</a></li>
+        <li><a href="Stats.html">Stats</a></li>
+        <li><a href="head_to_head.html">Head to Head</a></li>
+        <li><a href="login.html">LogOut</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="hero">
+    <div class="hero-content">
+      <h1>IPL Predictor</h1>
+      <div class="button-container">
+        <button onclick="window.location.href='frontend.html'">Predict Match</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2024 IPL Predictor. All rights reserved.</p>
+  </footer>
+</body>
+</html>

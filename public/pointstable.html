@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="IPLLL.png">
+  <title>Points Table</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #eaeaea;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 1rem;
+      background: #0055cc;
+      color: #fff;
+      font-size: 1.8rem;
+    }
+
+    #points-table {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+    }
+
+    select {
+      padding: 0.8rem 1.2rem;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      margin: 1rem 0;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+
+    .button-container button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.2rem;
+      background-color: #0055cc;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .button-container button:hover {
+      background-color: #FFD700;
+      transform: scale(1.1);
+    }
+
+    footer {
+      padding: 1.5rem;
+      background: #0055cc;
+      color: #fff;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>Points Table</header>
+  <section id="points-table">
+    <h2>Points Table</h2>
+    <select id="season-select" onchange="updatePointsTableImage()"></select>
+    <img id="points-table-image" src="" alt="Points Table for Selected Season">
+    <div class="button-container">
+      <button onclick="window.location.href='home.html'">Home</button>
+    </div>
+  </section>
+  <footer>© 2024 IPL Predictor. All rights reserved.</footer>
+  <script>
+    // JavaScript for Points Table
+    const seasonSelect = document.getElementById('season-select');
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear; year >= currentYear - 10; year--) {
+      const option = document.createElement('option');
+      option.value = year;
+      option.textContent = year;
+      seasonSelect.appendChild(option);
+    }
+    const pointsTableImages = {
+      2024: '2024.jpg',
+      2023: '2023.JPG',
+      2022: '2022.JPG',
+      2021: '2021.JPG',
+      2020: '2020.JPG',
+      2019: '2019.JPG',
+      2018: '2018.JPG',
+      2017: '2017.JPG',
+      2016: '2016.JPG',
+      2015: '2015.JPG',
+      2014: '2014.jpg',
+    };
+    function updatePointsTableImage() {
+      const selectedSeason = seasonSelect.value;
+      const img = document.getElementById('points-table-image');
+      img.src = pointsTableImages[selectedSeason] || '';
+    }
+    seasonSelect.value = currentYear;
+    updatePointsTableImage();
+  </script>
+</body>
+</html>

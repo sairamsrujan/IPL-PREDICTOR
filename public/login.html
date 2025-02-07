@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="IPLLL.png">
+  <title>Login - IPL Predictor</title>
+  <style>
+   :root {
+      --primary-color: #FFD700; /* Bright yellow for the primary elements */
+      --secondary-color: #FF8C00; /* Orange for hover effect */
+      --highlight-color: #FFFFFF; /* White text for good contrast */
+      --dark-bg: rgba(0, 0, 0, 0.5); /* Slightly darker transparent background */
+      --blackish-grey: rgba(33, 33, 33, 0.7); /* Darker greyish background */
+      --white: #fff;
+      --text-color: #ddd;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-color);
+      background-image: url('ipl_logo.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100vh;
+      padding-right: 10px; /* Reduced padding to move it slightly left */
+    }
+
+    .main-container {
+      background: rgba(255, 255, 255, 0.1); /* Transparent white for glassy effect */
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      width: 400px;
+      backdrop-filter: blur(15px); /* Frosted glass effect */
+      -webkit-backdrop-filter: blur(15px); /* For Safari */
+      border: 1px solid rgba(255, 255, 255, 0.3); /* Add border for extra glassy look */
+    }
+
+    .main-container h2 {
+      text-align: center;
+      color: var(--highlight-color);
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: var(--highlight-color);
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid var(--highlight-color);
+        border-radius: 4px;
+        background-color: var(--blackish-grey);
+        color: var(--highlight-color);
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      background-color: var(--primary-color);
+      color: var(--blackish-grey);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    p {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    p a {
+      color: var(--highlight-color);
+      text-decoration: none;
+    }
+
+    p a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const response = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        // Redirect to the main website after successful login
+        window.location.href = 'home.html'; // Replace 'index.html' with your website's home page
+      } else {
+        alert(data.error);
+      }
+    });
+  </script>
+</body>
+</html>

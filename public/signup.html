@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="IPLLL.png">
+  <title>Sign Up - IPL Predictor</title>
+  <style>
+    :root {
+      --primary-color: #ffffff;
+      --highlight-color: #FFD700;
+      --text-color: #f0f0f0;
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --border-glass: rgba(255, 255, 255, 0.3);
+      --form-bg-color: rgba(0, 0, 0, 0.6);
+      --form-text-color: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-color);
+      background: url('signup.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      backdrop-filter: blur(3px);
+    }
+
+    .container {
+      background: var(--form-bg-color);
+      color: var(--form-text-color);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-glass);
+      width: 400px;
+    }
+
+    .container h2 {
+      text-align: center;
+      color: var(--highlight-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: var(--text-color);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--highlight-color);
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      background-color: var(--highlight-color);
+      color: var(--primary-color);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: rgba(255, 215, 0, 0.8);
+    }
+
+    p {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    p a {
+      color: var(--highlight-color);
+      text-decoration: none;
+    }
+
+    p a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const response = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        window.location.href = 'login.html'; // Redirect to login page after signup
+      } else {
+        alert(data.error);
+      }
+    });
+  </script>
+</body>
+</html>

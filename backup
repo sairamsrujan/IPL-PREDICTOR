@@ -1,0 +1,20 @@
+document.getElementById('result').innerHTML = `
+<div class="result-team">
+ <div class="team-logo">
+   <img src="${battingTeamImageUrl}" alt="${data.batting_team}">
+ </div>
+ <div class="team-info">
+   <div class="team-name">${data.batting_team}</div>
+   <div class="win-percentage">Win Probability: ${(battingTeamProbability * 100).toFixed(2)}%</div>
+ </div>
+</div>
+<div class="result-team">
+ <div class="team-logo">
+   <img src="${bowlingTeamImageUrl}" alt="${data.bowling_team}">
+ </div>
+ <div class="team-info">
+   <div class="team-name">${data.bowling_team}</div>
+   <div class="win-percentage">Win Probability: ${(bowlingTeamProbability * 100).toFixed(2)}%</div>
+ </div>
+</div>
+`;

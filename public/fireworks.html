@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realistic Fireworks Celebration</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .firework {
+      position: absolute;
+      width: 20px; /* Increased size */
+      height: 20px; /* Increased size */
+      background: transparent;
+      border-radius: 50%;
+      animation: explode 2s ease-out forwards; /* Longer animation time */
+    }
+
+    .spark {
+      position: absolute;
+      width: 6px; /* Spark size */
+      height: 6px; /* Spark size */
+      background: white;
+      border-radius: 50%;
+      animation: fly 2s ease-out forwards, fade 2s ease-in forwards; /* Multiple animations */
+    }
+
+    @keyframes explode {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(2); /* Explosion size */
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--dx), var(--dy)) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fade {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Function to create fireworks
+    function createFirework() {
+      const firework = document.createElement("div");
+      firework.classList.add("firework");
+
+      // Random position for the firework
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      firework.style.left = `${x}px`; /* Fixed string interpolation */
+      firework.style.top = `${y}px`; /* Fixed string interpolation */
+
+      // Add sparks
+      for (let i = 0; i < 50; i++) { /* More sparks */
+        const spark = document.createElement("div");
+        spark.classList.add("spark");
+
+        // Random direction and speed
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 200 + 50; /* Larger spread */
+        const speed = Math.random() * 2 + 3; /* Random speed of sparks */
+        
+        spark.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+        spark.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+        spark.style.animationDuration = `${speed}s`; /* Varying speed */
+        spark.style.backgroundColor = getRandomColor(); /* Random color */
+
+        firework.appendChild(spark);
+      }
+
+      document.body.appendChild(firework);
+
+      // Remove firework after animation (increased to 2 seconds to match animation duration)
+      setTimeout(() => {
+        firework.remove();
+      }, 2000);
+    }
+
+    // Generate random color with added brightness for realism
+    function getRandomColor() {
+      const colors = [
+        "#FF5733", "#33FF57", "#3357FF", "#FFFF33", "#FF33FF", "#33FFFF",
+        "#FF6600", "#CC33FF", "#66FF33", "#00FF66", "#FF0066", "#6600FF"
+      ];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Trigger fireworks every 1 second
+    setInterval(createFirework, 1000); /* Triggering every 1 second */
+  </script>
+</body>
+</html>

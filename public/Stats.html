@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="IPLLL.png">
+
+  <title>IPL Stats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1E90FF; /* Lighter Blue */
+      --secondary-color: #0066cc; /* Darker Blue */
+      --highlight-color: #FFD700; /* Gold */
+      --light-bg: #F8F8F8; /* Light Background */
+      --white: #FFFFFF;
+      --text-color: #333333;
+      --button-bg: #FF4500;
+      --button-hover-bg: #FF6347;
+      --border-color: #DDDDDD;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      background-color: var(--light-bg);
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      background: var(--primary-color);
+      color: var(--white);
+      font-size: 2.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 80vh;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    label {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--text-color);
+    }
+
+    select {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      border: 1px solid var(--border-color);
+      background-color: var(--white);
+      color: var(--text-color);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    select:hover {
+      border-color: var(--primary-color);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    .button-container {
+      text-align: center;
+      margin: 1.5rem;
+    }
+
+    .button-container button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.2rem;
+      background-color: #003399;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #stats-container {
+      margin-top: 2rem;
+      text-align: center;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background-color: var(--white);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 90%;
+      animation: slideIn 1s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .stat-item {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+      background-color: var(--light-bg);
+      transform: scale(1.02);
+    }
+
+    .stat-item img {
+      width: 50px;
+      height: 50px;
+      margin-left: 10px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .stat-item img:hover {
+      transform: rotate(15deg);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    footer {
+      padding: 1.5rem;
+      background: var(--secondary-color);
+      color: var(--white);
+      text-align: center;
+      font-weight: 400;
+    }
+
+    footer p {
+      font-size: 1rem;
+    }
+
+    .button {
+      background-color: var(--button-bg);
+      padding: 0.8rem 1.6rem;
+      font-size: 1.1rem;
+      color: var(--white);
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: var(--button-hover-bg);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    IPL Stats
+  </header>
+
+  <!-- Stats Section -->
+  <section>
+    <h2>Season Stats</h2>
+    <label for="season-select">Select Season:</label>
+    <select id="season-select" onchange="updateStats()">
+      <!-- Dropdown options will be populated dynamically -->
+    </select>
+
+    <!-- Stats Container -->
+    <div id="stats-container">
+      <div class="stat-item" id="winner">
+        Winner: <span></span>
+        <img src="" alt="Winner Logo" id="winner-logo">
+      </div>
+      <div class="stat-item" id="runner-up">
+        Runner-Up: <span></span>
+        <img src="" alt="Runner-Up Logo" id="runner-logo">
+      </div>
+      <div class="stat-item" id="orange-cap">
+        Orange Cap: <span></span>
+        <img src="orange-cap.png" alt="Orange Cap">
+      </div>
+      <div class="stat-item" id="purple-cap">
+        Purple Cap: <span></span>
+        <img src="purple-cap.png" alt="Purple Cap">
+      </div>
+      <div class="stat-item" id="best-catch">
+        Best Catch: <span></span>
+        <img src="catch.png" alt="Best Catch">
+      </div>
+    </div>
+  </section>
+  <div class="button-container">
+    <button onclick="window.location.href='home.html'">Home</button>
+  </div>
+  <!-- Footer Section -->
+  <footer>
+    <p>© 2024 IPL Predictor. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Initialize dropdown menu with seasons
+    const seasonSelect = document.getElementById('season-select');
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear; year >= currentYear - 10; year--) {
+      const option = document.createElement('option');
+      option.value = year;
+      option.textContent = year;
+      seasonSelect.appendChild(option);
+    }
+
+    // Season stats data
+    const seasonStats = {
+        2024: { orangeCap: 'Virat Kohli (RCB) 741 Runs', purpleCap: 'Harshal Patel (PBKS) 24 wickets', bestCatch: 'Ramandeep Singh (KKR)', winner: 'KKR', runnerUp: 'SRH', winnerLogo: 'KKR.png', runnerLogo: 'SRH.png' },
+        2023: { orangeCap: 'Shubman Gill (GT) 890 Runs', purpleCap: 'Mohd Shami (GT) 28 wickets', bestCatch: 'Rashid Khan (GT)', winner: 'CSK', runnerUp: 'GT', winnerLogo: 'CSK.png', runnerLogo: 'GT.png' },
+        2022: { orangeCap: 'Jos Buttler (RR) 863 Runs', purpleCap: 'Yuzi Chahal (RR) 27 wickets', bestCatch: 'Evin Lewis (LSG)', winner: 'GT', runnerUp: 'RR', winnerLogo: 'GT.png', runnerLogo: 'RR.png' },
+        2021: { orangeCap: 'Ruturaj Gaikwad (CSK) 635 Runs', purpleCap: 'Harshal Patel (RCB) 32 wickets', bestCatch: 'Ravi Bishnoi (PBKS)', winner: 'CSK', runnerUp: 'KKR', winnerLogo: 'CSK.png', runnerLogo: 'KKR.png' },
+        2020: { orangeCap: 'KL Rahul (PBKS) 670 Runs', purpleCap: 'Kagiso Rabada (DC) 30 wickets', bestCatch: 'Virat Kohli (RCB)', winner: 'MI', runnerUp: 'DC', winnerLogo: 'MI.png', runnerLogo: 'DC.jpg' },
+        2019: { orangeCap: 'David Warner (SRH) 692 Runs', purpleCap: 'Imran Tahir (CSK) 26 wickets', bestCatch: 'Kieron Pollard (MI)', winner: 'MI', runnerUp: 'CSK', winnerLogo: 'MI.png', runnerLogo: 'CSK.png' },
+        2018: { orangeCap: 'Kane Williamson (SRH) 735 Runs', purpleCap: 'Andrew Tye (PBKS) 24 wickets', bestCatch: 'Trent Boult (DC)', winner: 'CSK', runnerUp: 'SRH', winnerLogo: 'CSK.png', runnerLogo: 'SRH.png' },
+        2017: { orangeCap: 'David Warner (SRH) 641 Runs', purpleCap: 'Bhuvneshwar Kumar (SRH) 26 wickets', bestCatch: 'Suresh Raina (GL)', winner: 'MI', runnerUp: 'CSK', winnerLogo: 'MI.png', runnerLogo: 'CSK.png' },
+        2016: { orangeCap: 'Virat Kohli (RCB) 973 Runs', purpleCap: 'Bhuvneshwar Kumar (SRH) 23 wickets', bestCatch: 'Suresh Raina (GL)', winner: 'SRH', runnerUp: 'RCB', winnerLogo: 'SRH.png', runnerLogo: 'RCB.png' },
+        2015: { orangeCap: 'KL Rahul (PBKS) 670 Runs', purpleCap: 'Dwayne Bravo (CSK) 26 wickets', bestCatch: 'Dwayne Bravo (CSK)', winner: 'MI', runnerUp: 'CSK', winnerLogo: 'MI.png', runnerLogo: 'CSK.png' },
+        2014: { orangeCap: 'Robin Uthappa (KKR) 660 Runs', purpleCap: 'Mohit Sharma (CSK) 23 wickets', bestCatch: 'Kieron Pollard (MI)', winner: 'KKR', runnerUp: 'PBKS', winnerLogo: 'KKR.png', runnerLogo: 'KXIP.png' },
+    };
+
+    // Update stats based on the selected season
+    function updateStats() {
+      const selectedSeason = seasonSelect.value;
+      const stats = seasonStats[selectedSeason] || { orangeCap: 'Data not available', purpleCap: 'Data not available', bestCatch: 'Data not available', winner: 'Data not available', runnerUp: 'Data not available', winnerLogo: '', runnerLogo: '' };
+
+      document.getElementById('orange-cap').querySelector('span').textContent = stats.orangeCap;
+      document.getElementById('purple-cap').querySelector('span').textContent = stats.purpleCap;
+      document.getElementById('best-catch').querySelector('span').textContent = stats.bestCatch;
+      document.getElementById('winner').querySelector('span').textContent = stats.winner;
+      document.getElementById('runner-up').querySelector('span').textContent = stats.runnerUp;
+
+      document.getElementById('winner-logo').src = stats.winnerLogo;
+      document.getElementById('runner-logo').src = stats.runnerLogo;
+    }
+
+    // Initialize with the current season's stats
+    seasonSelect.value = currentYear;
+    updateStats();
+  </script>
+</body>
+</html>

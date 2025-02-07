@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="IPLLL.png">
+  <title>Cricket Prediction</title>
+  
+  <style>
+    body {
+      background: url("stadium.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #212529;
+      font-size: 2.8em;
+      text-shadow: 2px 2px 5px #555;
+      letter-spacing: 2px;
+    }
+    form {
+      max-width: 700px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.4);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      color: #2f6ca9;
+    }
+    select, input {
+      margin-bottom: 20px;
+      width: 100%;
+      padding: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.2);
+      color: rgb(50, 51, 54);
+      transition: all 0.3s ease-in-out;
+      margin:2px;  
+    }
+    select:focus, input:focus {
+      border-color: rgba(0, 123, 255, 0.7);
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+      background: rgba(255, 255, 255, 0.5);
+    }
+    select:hover {
+      background: rgba(240, 248, 255, 0.5);
+      transform: scale(1.02);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    option {
+      background: rgba(255, 255, 255, 0.8);
+      color: #212529;
+    }
+    select {
+      cursor: pointer;
+      animation: fadeIn 0.5s;
+    }
+    select:hover {
+      animation: bounce 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    button {
+      width: 48%;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+    #predictButton {
+      background: linear-gradient(90deg, rgba(0, 123, 255, 0.8), rgba(0, 86, 179, 0.8));
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.5);
+    }
+    #predictButton:hover {
+      background: linear-gradient(90deg, rgba(0, 86, 179, 0.8), rgba(0, 123, 255, 0.8));
+      transform: scale(1.05);
+    }
+    #homeButton {
+      background: linear-gradient(90deg, rgba(220, 53, 69, 0.8), rgba(200, 35, 51, 0.8));
+      color: white;
+      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.5);
+    }
+    #homeButton:hover {
+      background: linear-gradient(90deg, rgba(200, 35, 51, 0.8), rgba(220, 53, 69, 0.8));
+      transform: scale(1.05);
+    }
+    .result-team {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 1.4em;
+  background: rgba(255, 255, 255, 0.1); /* Make the background blend with the actual background */
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px); /* Glassy effect */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 80%; /* Center alignment improvement */
+  margin: 10px auto;
+}
+
+.result-team img {
+  width: 100px;
+  height: 60px;
+  border-radius: 8px;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.result-team .team-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.result-team .team-name, 
+.result-team .win-percentage {
+  font-family: 'Arial', sans-serif; /* Ensuring both are in the same font */
+  font-weight: bold;
+  color: #fff; /* White color for better visibility */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.result-team .team-name {
+  font-size: 1.2em;
+}
+
+.result-team .win-percentage {
+  font-size: 1em;
+  font-style: italic;
+  color: #f8f9fa; /* Slightly lighter color for win probability */
+}
+.color{
+  color:#070707;
+}
+  </style>
+</head>
+<body>
+  <h1>Cricket Match Prediction</h1>
+  <form id="predictionForm">
+    <label for="batting_team" class="color">Batting Team:</label>
+    <select id="batting_team" required>
+        <option selected disabled>Select a team</option>
+        <option value="Chennai Super Kings">Chennai Super Kings</option>
+        <option value="Royal Challengers Bengaluru">Royal Challengers Bengaluru</option>
+        <option value="Punjab Kings">Punjab Kings</option>
+        <option value="Mumbai Indians">Mumbai Indians</option>
+        <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+        <option value="Rajasthan Royals">Rajasthan Royals</option>
+        <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+        <option value="Delhi Capitals">Delhi Capitals</option>
+        <option value="Lucknow Super Giants">Lucknow Super Giants</option>
+        <option value="Gujarat Titans">Gujarat Titans</option>
+    </select>
+
+    <label for="bowling_team" class="color">Bowling Team:</label>
+    <select id="bowling_team" required>
+        <option selected disabled>Select a team</option>
+        <option value="Chennai Super Kings">Chennai Super Kings</option>
+        <option value="Royal Challengers Bengaluru">Royal Challengers Bengaluru</option>
+        <option value="Punjab Kings">Punjab Kings</option>
+        <option value="Mumbai Indians">Mumbai Indians</option>
+        <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+        <option value="Rajasthan Royals">Rajasthan Royals</option>
+        <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+        <option value="Delhi Capitals">Delhi Capitals</option>
+        <option value="Lucknow Super Giants">Lucknow Super Giants</option>
+        <option value="Gujarat Titans">Gujarat Titans</option>
+    </select>
+
+    <label for="city" class="color">Venue:</label>
+    <select id="city" required>
+        <option selected disabled>Select a Venue</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Bangalore">Bangalore</option>
+        <option value="Chandigarh">Chandigarh</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Kolkata">Kolkata</option>
+        <option value="Jaipur">Jaipur</option>
+        <option value="Hyderabad">Hyderabad</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Lucknow">Lucknow</option>
+        <option value="Ahmedabad">Ahmedabad</option>
+    </select>
+
+    <label for="wickets_remaining" class="color">Remaining Wickets:</label>
+    <input type="number" id="wickets_remaining" min="0" max="10" required>
+
+    <label for="runs_left" class="color">Runs Left:</label>
+    <input type="number" id="runs_left" min="0" required>
+
+    <label for="balls_left" class="color">Balls Left:</label>
+    <input type="number" id="balls_left" min="0" max="120" required>
+
+    <label for="total_run_x" class="color">Target:</label>
+    <input type="number" id="total_run_x" min="1" max="350" required>
+
+    <div class="button-container">
+      <button type="submit" id="predictButton">Predict</button>
+      <button type="button" id="homeButton" onclick="window.location.href='home.html'">Home</button>
+    </div>
+  </form>
+  
+  <div id="result"></div>
+
+  <script>
+    const teamLogos = {
+      "Chennai Super Kings": "CSK.png",
+      "Royal Challengers Bengaluru": "RCB.png",
+      "Punjab Kings": "KXIP.png",
+      "Mumbai Indians": "MI.png",
+      "Kolkata Knight Riders": "KKR.png",
+      "Rajasthan Royals": "RR.png",
+      "Sunrisers Hyderabad": "SRH.png",
+      "Delhi Capitals": "DC.jpg",
+      "Lucknow Super Giants": "LSG.png",
+      "Gujarat Titans": "GT.png"
+    };
+
+    document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const data = {
+        batting_team: document.getElementById('batting_team').value,
+        bowling_team: document.getElementById('bowling_team').value,
+        city: document.getElementById('city').value,
+        wickets_remaining: parseInt(document.getElementById('wickets_remaining').value),
+        runs_left: parseInt(document.getElementById('runs_left').value),
+        balls_left: parseInt(document.getElementById('balls_left').value),
+        total_run_x: parseInt(document.getElementById('total_run_x').value),
+      };
+
+      // Check that the batting and bowling teams are not the same
+      if (data.batting_team === data.bowling_team) {
+        alert('Batting and Bowling teams must be different!');
+        return;
+      }
+
+      // Validate that balls_left is less than or equal to 120
+      if (data.balls_left > 120) {
+        alert('Balls left cannot be more than 120!');
+        return;
+      }
+
+      // Validate that runs_left is less than or equal to target
+      if (data.runs_left > data.total_run_x) {
+        alert('Runs left cannot be more than the target!');
+        return;
+      }
+
+      // Check if balls_left is 120 and wickets_remaining is less than 9
+      if (data.balls_left === 120 && data.wickets_remaining < 10) {
+        alert('Cannot predict when there are 120 balls left and fewer than 9 wickets remaining!');
+        return;
+      }
+
+      // Check if the target is greater than or equal to 350
+      if (data.total_run_x >= 350) {
+        alert('Target should be less than 350 to predict the outcome!');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) throw new Error('Failed to get prediction from server');
+
+        const result = await response.json();
+
+        if (result.error) {
+          document.getElementById('result').textContent = 'Error fetching prediction. Please try again later.';
+        } else {
+          const battingTeamProbability = result.batting_team.winning_probability;
+          const bowlingTeamProbability = result.bowling_team.winning_probability;
+          document.getElementById('result').innerHTML = `
+            <div class="result-team">
+              <img src="${teamLogos[data.batting_team]}" alt="${data.batting_team}" class="team-logo">
+              <div class="team-info">
+                <div class="team-name">${data.batting_team}</div>
+                <div class="win-percentage">Win Probability: ${(battingTeamProbability).toFixed(2)}%</div>
+              </div>
+            </div>
+            <div class="result-team">
+              <img src="${teamLogos[data.bowling_team]}" alt="${data.bowling_team}" class="team-logo">
+              <div class="team-info">
+                <div class="team-name">${data.bowling_team}</div>
+                <div class="win-percentage">Win Probability: ${(bowlingTeamProbability).toFixed(2)}%</div>
+              </div>
+            </div>
+          `;
+        }
+      } catch (error) {
+        document.getElementById('result').textContent = 'Error fetching prediction. Please try again later.';
+        console.error('Error:', error.message);
+      }
+    });
+  </script>
+</body>
+</html>

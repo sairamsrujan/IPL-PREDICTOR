@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="IPLLL.png">
+  <title>Team Players</title>
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #003399, #0056b3);
+      color: #fff;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .team-image-container {
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .team-image-container img {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .player-list {
+      margin: 2rem auto;
+      padding: 1rem;
+      max-width: 800px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .player-list h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      color: #0056b3;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .player-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .player-list ul li {
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .player-list ul li:last-child {
+      border-bottom: none;
+    }
+
+    .button-container {
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+
+    .button-container button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.2rem;
+      background-color: #003399;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+    }
+
+    .button-container button:hover {
+      background-color: #0056b3;
+      transform: translateY(-4px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), 0 0 15px #003399;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="team-name">Team Name</h1>
+  </header>
+
+  <section class="team-image-container">
+    <img id="team-logo" src="" alt="Team Logo">
+  </section>
+
+  <section class="player-list">
+    <h2>Players</h2>
+    <ul id="player-names">
+      <!-- Player names will be dynamically inserted here -->
+    </ul>
+  </section>
+
+  <div class="button-container">
+    <button onclick="window.history.back()">Back</button>
+  </div>
+
+  <script>
+    window.onload = function() {
+      // Team Data: Logos and Players
+      const teams = {
+        "CSK": {
+          logo: "CSK.png",
+          players: ["MS Dhoni", "Suresh Raina", "Ravindra Jadeja", "Deepak Chahar", "Dwayne Bravo"]
+        },
+        "DC": {
+          logo: "Dc.png",
+          players: ["Rishabh Pant", "Prithvi Shaw", "Shikhar Dhawan", "Kagiso Rabada", "Axar Patel"]
+        },
+        "GT": {
+          logo: "GT.png",
+          players: ["Hardik Pandya", "Shubman Gill", "Rashid Khan", "Mohammad Shami", "David Miller"]
+        },
+        "KKR": {
+          logo: "KKR.png",
+          players: ["Andre Russell", "Sunil Narine", "Shreyas Iyer", "Varun Chakravarthy", "Nitish Rana"]
+        },
+        "RCB": {
+          logo: "RCB.png",
+          players: ["Virat Kohli", "Faf du Plessis", "Glenn Maxwell", "Harshal Patel", "Mohammed Siraj"]
+        },
+        "KXIP": {
+          logo: "KXIP.png",
+          players: ["KL Rahul", "Mayank Agarwal", "Mohammad Shami", "Arshdeep Singh", "Chris Gayle"]
+        },
+        "LSG": {
+          logo: "LSG.png",
+          players: ["KL Rahul", "Quinton de Kock", "Marcus Stoinis", "Deepak Hooda", "Ravi Bishnoi"]
+        },
+        "MI": {
+          logo: "MI.png",
+          players: ["Rohit Sharma", "Jasprit Bumrah", "Kieron Pollard", "Suryakumar Yadav", "Ishan Kishan"]
+        },
+        "RR": {
+          logo: "RR.png",
+          players: ["Sanju Samson", "Jos Buttler", "Yuzvendra Chahal", "Trent Boult", "Riyan Parag"]
+        },
+        "SRH": {
+          logo: "SRH.png",
+          players: ["Kane Williamson", "David Warner", "Bhuvneshwar Kumar", "Rashid Khan", "T Natarajan"]
+        }
+      };
+
+      // Extract team key from URL
+      const params = new URLSearchParams(window.location.search);
+      const teamKey = params.get("team");
+
+      // If no team query parameter is found
+      if (!teamKey) {
+        alert('No team specified in the URL. Please use ?team=TEAM_NAME.');
+        return;
+      }
+
+      // Update team data dynamically
+      const teamData = teams[teamKey];
+      if (teamData) {
+        // Update team name and logo
+        document.getElementById("team-name").textContent = teamKey;
+        document.getElementById("team-logo").src = teamData.logo;
+        document.getElementById("team-logo").alt= '${teamKey} Logo';
+
+        // Populate the player list
+        const playerList = document.getElementById("player-names");
+        playerList.innerHTML = ''; // Clear any previous players
+        teamData.players.forEach(player => {
+          const li = document.createElement("li");
+          li.textContent = player;
+          playerList.appendChild(li);
+        });
+      } else {
+        // If no team data is found, display an error
+        document.getElementById("team-name").textContent = "Team Not Found";
+        document.getElementById("player-names").innerHTML = "<li>No data available.</li>";
+      }
+    }
+  </script>
+</body>
+</html>

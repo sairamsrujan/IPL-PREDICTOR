@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="IPLLL.png">
+  <title>IPL Teams</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #eaeaea;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, #003399, #0056b3);
+      color: #fff;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      animation: gradientShift 5s infinite alternate;
+      background-attachment: fixed; /* Parallax effect */
+    }
+
+    @keyframes gradientShift {
+      from {
+        background: linear-gradient(135deg, #003399, #0056b3);
+      }
+      to {
+        background: linear-gradient(135deg, #0056b3, #003399);
+      }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: text-shadow 0.3s ease;
+    }
+
+    h1:hover {
+      text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+    }
+
+    .team-gallery {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+
+    .team-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+      height: 220px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+      border: 3px solid transparent;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .team-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 10px #0056b3;
+      border: 3px solid;
+      border-image: linear-gradient(to right, #ff7eb3, #fdc20a);
+      border-image-slice: 1;
+    }
+
+    .team-card img {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      border-radius: 8px;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .team-card:hover img {
+      transform: scale(1.2);
+      filter: brightness(1.2);
+    }
+
+    .team-name {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .button-container {
+      text-align: center;
+      margin: 1.5rem;
+      position: relative;
+    }
+
+    .button-container button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.2rem;
+      background-color: #003399;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      transition: background-color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+    }
+
+    .button-container button:hover {
+      background-color: #0056b3;
+      transform: translateY(-4px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), 0 0 15px #003399;
+    }
+
+    .button-container button:after {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      transition: transform 0.5s ease;
+    }
+
+    .button-container button:active:after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+      transition: transform 0.5s ease, opacity 1s ease;
+    }
+
+    footer {
+      background-color: #003399;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #ffd700;
+      }
+      to {
+        text-shadow: 0 0 15px #ffd700, 0 0 25px #ffd700;
+      }
+    }
+
+    footer a {
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>IPL Teams</h1>
+  </header>
+  <section class="team-gallery">
+    <div class="team-card" onclick="window.location.href='player.html?team=CSK'">
+      <img src="CSK.png" alt="Chennai Super Kings">
+      <p class="team-name">Chennai Super Kings</p>
+    </div>
+    <div class="team-card" onclick="window.location.href='player.html?team=DC'">
+    <img src="dc.png" alt="DC">
+  <p class="team-name">Delhi Capitals</p>
+</div>
+<div class="team-card" onclick="window.location.href='player.html?team=GT'">
+  <img src="gt.png" alt="GT">
+  <p class="team-name">Gujarat Titans</p>
+</div>
+<div class="team-card" onclick="window.location.href='player.html?team=KKR'">
+  <img src="kkr.png" alt="KKR">
+  <p class="team-name">Kolkata Knight Riders</p>
+</div>
+<div class="team-card" onclick="window.location.href='player.html?team=RCB'">
+    <img src="rcb.png" alt="RCB">
+    <p class="team-name">Royal Challengers Bangalore</p>
+</div>
+<div class="team-card" onclick="window.location.href='player.html?team=KXIP'">
+    <img src="kxip.png" alt="KXIP">
+    <p class="team-name">Punjab Kings</p>
+</div>
+<div class="team-card" onclick="window.location.href='player.html?team=LSG'">
+    <img src="lsg.png" alt="LSG">
+    <p class="team-name">Lucknow Super Giants</p>
+</div>
+<div class="team-card" onclick="window.location.href='player.html?team=MI'">
+    <img src="mi.png" alt="MI" onclick="window.location.href='player.html?team=MI'">
+    <p class="team-name">Mumbai Indians</p>
+</div>
+<div class="team-card" onclick="window.location.href='player.html?team=RR'">
+    <img src="rr.png" alt="Rajasthan Royals">
+    <p class="team-name">Rajasthan Royals</p>
+</div>
+<div class="team-card" onclick="window.location.href='player.html?team=SRH'">
+    <img src="srh.png" alt="SRH">
+    <p class="team-name">Sunrisers Hyderabad</p>
+</div>
+  </section>
+  <div class="button-container">
+    <button onclick="window.location.href='home.html'">Home</button>
+  </div>
+  <footer>
+    <p>&copy; 2024 IPL Teams. Designed by <a href="#">You</a></p>
+  </footer>
+</body>
+</html>

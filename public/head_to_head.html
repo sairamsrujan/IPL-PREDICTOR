@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="IPLLL.png">
+    <title>IPL Head-to-Head</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #00416A, #E4E5E6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 900px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .team-selector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 50px;
+        }
+
+        .team-card {
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 25px;
+            border-radius: 15px;
+            width: 200px;
+            background-color: rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.5);
+        }
+
+        .team-card.selected {
+            background-color: rgba(0, 123, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.8);
+        }
+
+        .team-logo {
+            width: 80px;
+            height: 80px;
+            margin: 10px auto;
+            display: block;
+            border-radius: 50%;
+            object-fit: contain;
+            transition: transform 0.5s ease, opacity 0.3s ease;
+        }
+
+        .team-logo.hidden {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .vs {
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 20px;
+        }
+
+        #check-h2h {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #check-h2h:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        #h2h-results-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            min-height: 150px;
+        }
+
+        #h2h-results {
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #h2h-results h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        #h2h-results p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+            outline: none;
+        }
+
+        option {
+            padding: 8px;
+        }
+    .button-container button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.2rem;
+      background-color: #003399;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin:20px;
+    }
+    .button {
+      background-color: var(--button-bg);
+      padding: 0.8rem 1.6rem;
+      font-size: 1.1rem;
+      color: var(--white);
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: var(--button-hover-bg);
+      transform: scale(1.05);
+    }
+
+        /* Keyframes for the pulsing animation */
+        @keyframes pulseAnimation {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="team-selector">
+            <div class="team-card" id="team1-card">
+                <img id="team1-logo" class="team-logo hidden" src="" alt="Team 1 Logo">
+                <p>Team 1</p>
+                <select id="team1">
+                    <option value="">Select Team</option>
+                </select>
+            </div>
+            <div class="vs">VS</div>
+            <div class="team-card" id="team2-card">
+                <img id="team2-logo" class="team-logo hidden" src="" alt="Team 2 Logo">
+                <p>Team 2</p>
+                <select id="team2">
+                    <option value="">Select Team</option>
+                </select>
+            </div>
+        </div>
+        <button id="check-h2h">Check Head-to-Head</button>
+        <div id="h2h-results-container">
+            <div id="h2h-results"></div>
+        </div>
+        <div class="button-container">
+            <button onclick="window.location.href='home.html'">Home</button>
+          </div>
+    </div>
+
+    <script>
+        const team1Select = document.getElementById('team1');
+        const team2Select = document.getElementById('team2');
+        const checkH2HButton = document.getElementById('check-h2h');
+        const h2hResults = document.getElementById('h2h-results');
+        const team1Logo = document.getElementById('team1-logo');
+        const team2Logo = document.getElementById('team2-logo');
+        const team1Card = document.getElementById('team1-card');
+        const team2Card = document.getElementById('team2-card');
+
+        const teams = [
+            { name: "SRH", logo: "srh.png" },
+            { name: "CSK", logo: "csk.png" },
+            { name: "MI", logo: "mi.png" },
+            { name: "RCB", logo: "rcb.png" },
+            { name: "KKR", logo: "kkr.png" },
+            { name: "RR", logo: "rr.png" },
+            { name: "DC", logo: "dc.png" },
+            { name: "PBKS", logo: "kxip.png" },
+            { name: "LSG", logo:"LSG.jpeg"},
+            { name:"GT",logo:"GT.png"}
+        ];
+        const headToHeadStats = [
+    { team1: "CSK", team2: "MI", totalMatches: 37, team1Wins: 17, team2Wins: 20, ties: 0 },
+    { team1: "CSK", team2: "KKR", totalMatches: 30, team1Wins: 19, team2Wins: 10, ties: 1 },
+    { team1: "CSK", team2: "PBKS", totalMatches: 30, team1Wins: 16, team2Wins: 14, ties: 0 },
+    { team1: "CSK", team2: "GT", totalMatches: 7, team1Wins: 3, team2Wins: 4, ties: 0 },
+    { team1: "CSK", team2: "LSG", totalMatches: 5, team1Wins: 1, team2Wins: 3, ties: 1 },
+    { team1: "CSK", team2: "RCB", totalMatches: 33, team1Wins: 21, team2Wins: 11, ties: 0 },
+    { team1: "CSK", team2: "RR", totalMatches: 29, team1Wins: 16, team2Wins: 13, ties: 0 },
+    { team1: "CSK", team2: "DC", totalMatches: 30, team1Wins: 19, team2Wins: 11, ties: 0 },
+    { team1: "CSK", team2: "SRH", totalMatches: 21, team1Wins: 15, team2Wins: 6, ties: 0 },
+
+    { team1: "MI", team2: "KKR", totalMatches: 34, team1Wins: 23, team2Wins: 11, ties: 0 },
+    { team1: "MI", team2: "PBKS", totalMatches: 32, team1Wins: 17, team2Wins: 15, ties: 0 },
+    { team1: "MI", team2: "GT", totalMatches: 5, team1Wins: 2, team2Wins: 3, ties: 0 },
+    { team1: "MI", team2: "LSG", totalMatches: 6, team1Wins: 1, team2Wins: 5, ties: 0 },
+    { team1: "MI", team2: "RCB", totalMatches: 33, team1Wins: 19, team2Wins: 14, ties: 0 },
+    { team1: "MI", team2: "RR", totalMatches: 30, team1Wins: 15, team2Wins: 14, ties: 1 },
+    { team1: "MI", team2: "DC", totalMatches: 35, team1Wins: 19, team2Wins: 16, ties: 0 },
+    { team1: "MI", team2: "SRH", totalMatches: 23, team1Wins: 13, team2Wins: 10, ties: 0 },
+
+    { team1: "KKR", team2: "PBKS", totalMatches: 33, team1Wins: 21, team2Wins: 12, ties: 0 },
+    { team1: "KKR", team2: "GT", totalMatches: 4, team1Wins: 1, team2Wins: 2, ties: 1 },
+    { team1: "KKR", team2: "LSG", totalMatches: 5, team1Wins: 2, team2Wins: 3, ties: 0 },
+    { team1: "KKR", team2: "RCB", totalMatches: 34, team1Wins: 20, team2Wins: 14, ties: 0 },
+    { team1: "KKR", team2: "RR", totalMatches: 30, team1Wins: 14, team2Wins: 14, ties: 2 },
+    { team1: "KKR", team2: "DC", totalMatches: 34, team1Wins: 18, team2Wins: 15, ties: 1 },
+    { team1: "KKR", team2: "SRH", totalMatches: 28, team1Wins: 19, team2Wins: 9, ties: 0 },
+
+    { team1: "PBKS", team2: "GT", totalMatches: 5, team1Wins: 2, team2Wins: 3, ties: 0 },
+    { team1: "PBKS", team2: "LSG", totalMatches: 4, team1Wins: 1, team2Wins: 3, ties: 0 },
+    { team1: "PBKS", team2: "RCB", totalMatches: 33, team1Wins: 17, team2Wins: 16, ties: 0 },
+    { team1: "PBKS", team2: "RR", totalMatches: 28, team1Wins: 12, team2Wins: 16, ties: 0 },
+    { team1: "PBKS", team2: "DC", totalMatches: 33, team1Wins: 17, team2Wins: 16, ties: 0 },
+    { team1: "PBKS", team2: "SRH", totalMatches: 23, team1Wins: 7, team2Wins: 16, ties: 0 },
+
+    { team1: "GT", team2: "LSG", totalMatches: 5, team1Wins: 4, team2Wins: 1, ties: 0 },
+    { team1: "GT", team2: "RCB", totalMatches: 5, team1Wins: 2, team2Wins: 3, ties: 0 },
+    { team1: "GT", team2: "RR", totalMatches: 6, team1Wins: 5, team2Wins: 1, ties: 0 },
+    { team1: "GT", team2: "DC", totalMatches: 5, team1Wins: 2, team2Wins: 3, ties: 0 },
+    { team1: "GT", team2: "SRH", totalMatches: 5, team1Wins: 3, team2Wins: 1, ties: 1 },
+
+    { team1: "LSG", team2: "RCB", totalMatches: 5, team1Wins: 2, team2Wins: 3, ties: 0 },
+    { team1: "LSG", team2: "RR", totalMatches: 5, team1Wins: 1, team2Wins: 4, ties: 0 },
+    { team1: "LSG", team2: "DC", totalMatches: 5, team1Wins: 3, team2Wins: 2, ties: 0 },
+    { team1: "LSG", team2: "SRH", totalMatches: 4, team1Wins: 3, team2Wins: 1, ties: 0 },
+
+    { team1: "RCB", team2: "RR", totalMatches: 32, team1Wins: 15, team2Wins: 14, ties: 0 },
+    { team1: "RCB", team2: "DC", totalMatches: 31, team1Wins: 19, team2Wins: 11, ties: 1 },
+    { team1: "RCB", team2: "SRH", totalMatches: 25, team1Wins: 11, team2Wins: 13, ties: 1 },
+
+    { team1: "RR", team2: "DC", totalMatches: 29, team1Wins: 15, team2Wins: 14, ties: 0 },
+    { team1: "RR", team2: "SRH", totalMatches: 20, team1Wins: 11, team2Wins: 9, ties: 0 },
+
+    { team1: "DC", team2: "SRH", totalMatches: 24, team1Wins: 11, team2Wins: 13, ties:0}
+];
+
+
+        // Populate the dropdowns with team options
+teams.forEach(team => {
+    const option = document.createElement('option');
+    option.value = team.name;
+    option.textContent = team.name;
+    team1Select.appendChild(option.cloneNode(true));
+    team2Select.appendChild(option);
+});
+
+// Update logos on team selection
+function updateTeamLogo(teamSelect, logoElement) {
+    const selectedTeam = teams.find(team => team.name === teamSelect.value);
+    if (selectedTeam) {
+        logoElement.src = selectedTeam.logo;
+        logoElement.classList.remove('hidden');
+    } else {
+        logoElement.classList.add('hidden');
+    }
+}
+
+team1Select.addEventListener('change', () => updateTeamLogo(team1Select, team1Logo));
+team2Select.addEventListener('change', () => updateTeamLogo(team2Select, team2Logo));
+
+// Display head-to-head results
+checkH2HButton.addEventListener('click', () => {
+    const team1 = team1Select.value;
+    const team2 = team2Select.value;
+
+    if (!team1 || !team2 || team1 === team2) {
+        alert("Please select two different teams.");
+        return;
+    }
+
+    const h2hRecord = headToHeadStats.find(record =>
+        (record.team1 === team1 && record.team2 === team2) ||
+        (record.team1 === team2 && record.team2 === team1)
+    );
+
+    if (h2hRecord) {
+        h2hResults.innerHTML = `
+            <h2>${team1} vs ${team2}</h2>
+            <p>Total Matches: ${h2hRecord.totalMatches}</p>
+            <p>${team1} Wins: ${h2hRecord.team1 === team1 ? h2hRecord.team1Wins : h2hRecord.team2Wins}</p>
+            <p>${team2} Wins: ${team1 === h2hRecord.team1 ? h2hRecord.team2Wins : h2hRecord.team1Wins}</p>
+            <p>Ties: ${h2hRecord.ties}</p>
+        `;
+        h2hResults.style.display = 'block';
+    } else {
+        h2hResults.innerHTML = `<h2>No Data Found for ${team1} vs ${team2}</h2>`;
+        h2hResults.style.display = 'block';
+    }
+});
+
+    </script>
+</body>
+</html>
